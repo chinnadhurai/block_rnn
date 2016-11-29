@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # Copyright 2015 The TensorFlow Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -61,7 +63,8 @@ import time
 import numpy as np
 import tensorflow as tf
 
-from tensorflow.models.rnn.ptb import reader
+#from tensorflow.models.rnn.ptb import reader
+import reader
 
 flags = tf.flags
 logging = tf.logging
@@ -116,7 +119,7 @@ class PTBModel(object):
 
     self._initial_state = cell.zero_state(batch_size, data_type())
 
-    with tf.device("/cpu:0"):
+    with tf.device("/gpu:0"):
       embedding = tf.get_variable(
           "embedding", [vocab_size, size], dtype=data_type())
       inputs = tf.nn.embedding_lookup(embedding, input_.input_data)
